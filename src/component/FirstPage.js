@@ -19,19 +19,45 @@ export class FirstPage extends Component{
 
      render() {
          return(
-
              <div>
-             <h1>Test ok</h1>
-                 <span className="red"> {this.getData()}</span>
-                 {this.getButton()};
-                 <ul>
+         <section>
+             <h1>Next Java conferences</h1>
+             <div class="tbl-header">
+                 <table cellpadding="0" cellspacing="0" border="0">
+                     <thead>
+                     <tr>
+                         <th>Code</th>
+                         <th>Company</th>
+                         <th>Price</th>
+                         <th>Change</th>
+                         <th>Change %</th>
+                     </tr>
+                     </thead>
+                 </table>
+             </div>
+             <div class="tbl-content">
+                 <table cellpadding="0" cellspacing="0" border="0">
+                     <tbody>
                      {this.state.items.length ?
-                         this.state.items.map(item=><li key={item.number}>{item.name}</li>)
+                         this.state.items.map(item=>
+                         <tr>
+                             <td>{item.number}</td>
+                             <td>{item.name}</td>
+                             <td></td>
+                             <td></td>
+                             <td></td>
+                         </tr>)
                          : <li>Loading...</li>
                      }
-                 </ul>
+                     </tbody>
+                 </table>
              </div>
-
+         </section>
+         <div className="made-with-love">
+             Style copied and adapted with respect
+             from <a target="_blank" href="http://codepen.io/nikhil8krishnan">NK on codepen</a>
+         </div>
+             </div>
      )
      }
 
