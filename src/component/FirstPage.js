@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import './FirstPage.css';
-import Button from 'react-bootstrap/lib/Button';
-
+import { TableData } from './table/data/TableData';
+import { Button, ListGroup, ListGroupItem, Col, Grid, Row } from 'react-bootstrap';
 
 export class FirstPage extends Component{
 
      constructor(props) {
          super(props);
          this.name = 'marco';
-         this.state={items:[]};
+         this.state={items:[], selectedItem : null};
      }
 
     componentDidMount(){
-        fetch(`http://springdemo.io/rest/read-file`)
+        fetch(`http://localhost:8080/tables`)
             .then(result=>result.json())
             .then(items=>this.setState({items}))
     }
@@ -20,52 +20,44 @@ export class FirstPage extends Component{
      render() {
          return(
              <div>
-         <section>
-             <h1>Next Java conferences</h1>
-             <div class="tbl-header">
-                 <table cellpadding="0" cellspacing="0" border="0">
-                     <thead>
-                     <tr>
-                         <th>Code</th>
-                         <th>Company</th>
-                         <th>Price</th>
-                         <th>Change</th>
-                         <th>Change %</th>
-                     </tr>
-                     </thead>
-                 </table>
-             </div>
-             <div class="tbl-content">
-                 <table cellpadding="0" cellspacing="0" border="0">
-                     <tbody>
-                     {this.state.items.length ?
-                         this.state.items.map(item=>
-                         <tr>
-                             <td>{item.number}</td>
-                             <td>{item.name}</td>
-                             <td></td>
-                             <td></td>
-                             <td></td>
-                         </tr>)
-                         : <li>Loading...</li>
-                     }
-                     </tbody>
-                 </table>
-             </div>
+                 <Grid><Row className="show-grid">
+                 <Col md={3}>
+
+
+                <section>
+                    <ListGroup>
+                        {
+                            this.state.items.length ?
+                                this.state.items.map(item=>
+                                    <ListGroupItem onClick={() => this.handleClick(item)} key={item.name}>
+                                        <span style={{background: this.color(item)}}>{item.name}</span>
+
+                                    </ListGroupItem>)
+                                :<tr><td>Loading...</td></tr>
+                        }
+
+                    </ListGroup>
          </section>
-         <div className="made-with-love">
-             Style copied and adapted with respect
-             from <a target="_blank" href="http://codepen.io/nikhil8krishnan">NK on codepen</a>
-         </div>
+
+                 <Button bsStyle="success" bsSize="small">
+                     Something
+                 </Button></Col>
+                     <Col md={8}><TableData table={this.state.selectedItem} /></Col></Row>
+                 </Grid>
+
              </div>
      )
      }
 
-     getData() {
-         return 'marco';
+     handleClick(item){
+        this.setState({selectedItem : item});
+
      }
 
-     getButton() {
-         return <Button bsStyle="primary">Default</Button>
-     }
+    color(item) {
+    if (this.state.selectedItem === item) {
+        return "";
+    }
+    return "";
+}
 }
